@@ -43,6 +43,45 @@ type Paginator struct {
 	TotalPages int `json:"total_pages"`
 }
 
+type GlobalValidation struct {
+	RequiredValidation []RequiredValidation `json:"required_validation"`
+	DataTypeNumberIntValidation []DataTypeNumberIntValidation `json:"data_type_number_int_validation"`
+	DataTypeNumberFloatValidation []DataTypeNumberFloatValidation `json:"data_type_number_float_validation"`
+	MaxMinLonglatValidation []MaxMinLonglatValidation `json:"max_min_longlat_validation"`
+	PageLimitValidation []PageLimitValidation `json:"page_limit_validation"`
+	MaxMinNumberValidation []MaxMinNumberValidation `json:"max_min_number_validation"`
+	
+}
+type RequiredValidation struct {
+	Key string `json:"key"`
+	Value string `json:"value"`
+}
+
+type DataTypeNumberIntValidation struct {
+	Key string `json:"key"`
+	Value string `json:"value"`
+}
+
+type DataTypeNumberFloatValidation struct {
+	Key string `json:"key"`
+	Value string `json:"value"`
+}
+
+type MaxMinLonglatValidation struct {
+	Key string `json:"key"`
+	Value string `json:"value"`
+}
+type PageLimitValidation struct {
+	Key string `json:"key"`
+	Value string `json:"value"`
+}
+type MaxMinNumberValidation struct {
+	Key string `json:"key"`
+	Value string `json:"value"`
+	ValueMaxNumber float64 `json:"value_max_number"`
+	ValueMinNumber float64 `json:"value_min_number"`
+}
+//
 func (r *Response) MappingResponseSuccess(message string, data interface{}) {
 	r.StatusCode = http.StatusOK
 	r.Status = http.StatusText(r.StatusCode)

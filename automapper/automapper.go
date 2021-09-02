@@ -3,6 +3,9 @@ package automapper
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"go-helper/converter"
+	"io"
+	"io/ioutil"
 	"reflect"
 	"strconv"
 )
@@ -96,13 +99,32 @@ func GetValueAndColumnStructToDriverValue(value interface{}) ([]driver.Value, []
 			panic(err)
 		}
 
-		//dv := driver.Value(fv.Interface())
+		//dv := driver.Value(v.Interface())
+		if reflect.TypeOf(val).String() == "string" {
+			valueString := reflect.ValueOf(val).String()
+			convertDate := converter.StringToDateTimeNullable(valueString)
+			if convertDate.IsZero() == false {
+				val = convertDate
+			}
+		}
+
 		result = append(result, val)
 		i++
 	}
 
 	return result, k
 
+}
+
+func BindBody(reqbody io.ReadCloser) ([]byte, error) {
+	var body []byte
+	reqB, err := ioutil.ReadAll(reqbody)
+	if err != nil {
+		return nil, err
+	}
+	body = reqB
+
+	return body, err
 }
 
 

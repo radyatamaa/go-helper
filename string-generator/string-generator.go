@@ -38,6 +38,10 @@ func DecryptBase64(encryptedString string, keyString string) (decryptedString st
 	return string(res),nil
 }
 
-
+func NowYmd(format string) string {
+	t := time.Now()
+	timeFormated := t.Format(format)
+	return timeFormated
+}
 
 
